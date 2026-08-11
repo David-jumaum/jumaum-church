@@ -38,13 +38,32 @@ nav{
 nav .wrap{
   display:flex;justify-content:space-between;align-items:center;
   padding:14px 24px;
+  position:relative;
 }
 nav .brand{font-family:'Noto Serif KR',serif;font-weight:700;color:var(--terracotta-deep);font-size:1.05rem;letter-spacing:.02em;}
 nav ul{display:flex;gap:18px;list-style:none;margin:0;padding:0;font-size:.92rem;flex-wrap:wrap;}
 nav ul li a{color:var(--ink-soft);font-weight:500;}
 nav ul li a.active{color:var(--terracotta-deep);font-weight:700;}
+
+.nav-toggle{
+  display:none;background:none;border:none;cursor:pointer;
+  font-size:1.5rem;line-height:1;color:var(--terracotta-deep);padding:4px 6px;
+}
+
 @media (max-width:700px){
-  nav ul{display:none;}
+  nav ul{
+    display:none;
+    position:absolute;top:100%;left:0;right:0;
+    flex-direction:column;gap:0;
+    background:var(--cream);border-bottom:1px solid var(--line);
+    padding:6px 24px 14px;
+    box-shadow:0 8px 12px -8px rgba(0,0,0,0.15);
+  }
+  nav ul.open{display:flex;}
+  nav ul li{border-bottom:1px dashed var(--line);}
+  nav ul li:last-child{border-bottom:none;}
+  nav ul li a{display:block;padding:12px 2px;}
+  .nav-toggle{display:inline-block;}
 }
 
 /* Hero (홈페이지 전용) */
