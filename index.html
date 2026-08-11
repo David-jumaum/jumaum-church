@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -31,180 +32,19 @@
   ]
 }
 </script>
-<style>
-  :root{
-    --cream:#F7F1E7;
-    --cream-deep:#EFE6D5;
-    --terracotta:#B5602E;
-    --terracotta-deep:#8F4A22;
-    --blue:#2B6CA3;
-    --ink:#2E2A24;
-    --ink-soft:#5B5347;
-    --line:#DED2BA;
-    --white:#FFFDF9;
-  }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0;
-    background:var(--cream);
-    color:var(--ink);
-    font-family:'Noto Sans KR',sans-serif;
-    line-height:1.7;
-  }
-  h1,h2,h3{
-    font-family:'Noto Serif KR',serif;
-    margin:0;
-  }
-  a{color:var(--blue);text-decoration:none;}
-  a:hover{text-decoration:underline;}
-  a:focus-visible, button:focus-visible{outline:3px solid var(--blue); outline-offset:2px;}
-
-  .wrap{max-width:880px;margin:0 auto;padding:0 24px;}
-
-  /* Nav */
-  nav{
-    position:sticky;top:0;z-index:20;
-    background:rgba(247,241,231,0.92);
-    backdrop-filter:blur(6px);
-    border-bottom:1px solid var(--line);
-  }
-  nav .wrap{
-    display:flex;justify-content:space-between;align-items:center;
-    padding:14px 24px;
-  }
-  nav .brand{font-family:'Noto Serif KR',serif;font-weight:700;color:var(--terracotta-deep);font-size:1.05rem;letter-spacing:.02em;}
-  nav ul{display:flex;gap:20px;list-style:none;margin:0;padding:0;font-size:.92rem;}
-  nav ul li a{color:var(--ink-soft);font-weight:500;}
-  @media (max-width:600px){
-    nav ul{display:none;}
-  }
-
-  /* Hero */
-  header.hero{
-    padding:96px 0 72px;
-    text-align:center;
-    border-bottom:1px solid var(--line);
-  }
-  header.hero .eyebrow{
-    font-size:.82rem;letter-spacing:.18em;color:var(--terracotta);font-weight:700;
-    text-transform:uppercase;margin-bottom:18px;
-  }
-  header.hero h1{
-    font-size:clamp(2.1rem,5vw,3.2rem);
-    color:var(--ink);
-    font-weight:700;
-    margin-bottom:10px;
-  }
-  header.hero h1 span{display:block;font-size:.42em;color:var(--ink-soft);font-weight:500;margin-top:8px;letter-spacing:.02em;}
-  header.hero p.lead{
-    max-width:520px;margin:26px auto 0;
-    color:var(--ink-soft);font-size:1.05rem;
-  }
-
-  section{padding:64px 0;}
-  section + section{border-top:1px solid var(--line);}
-
-  .section-head{margin-bottom:36px;}
-  .section-head .num{
-    display:inline-block;font-family:'Noto Serif KR',serif;color:var(--blue);
-    font-size:.85rem;font-weight:700;letter-spacing:.12em;margin-bottom:10px;
-  }
-  .section-head h2{
-    font-size:1.7rem;color:var(--terracotta-deep);font-weight:700;
-  }
-
-  /* 소개 */
-  .intro p{font-size:1.02rem;color:var(--ink);max-width:640px;margin:0 0 16px;}
-  .intro p:last-child{margin-bottom:0;}
-  .pillars{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:32px;
-  }
-  @media (max-width:640px){.pillars{grid-template-columns:1fr;}}
-  .pillar{
-    background:var(--white);border:1px solid var(--line);border-radius:4px;
-    padding:22px 20px;
-  }
-  .pillar h3{color:var(--blue);font-size:1.05rem;margin-bottom:8px;}
-  .pillar p{margin:0;font-size:.92rem;color:var(--ink-soft);}
-  .closing{margin-top:32px;font-size:1rem;color:var(--terracotta-deep);font-weight:500;font-family:'Noto Serif KR',serif;}
-
-  /* 예배 안내 - timeline */
-  .timeline{margin-top:8px;border-left:2px solid var(--terracotta);padding-left:0;}
-  .t-item{
-    position:relative;padding:16px 0 16px 28px;border-bottom:1px dashed var(--line);
-  }
-  .t-item:last-child{border-bottom:none;}
-  .t-item::before{
-    content:'';position:absolute;left:-6px;top:22px;width:10px;height:10px;
-    border-radius:50%;background:var(--terracotta);border:2px solid var(--cream);
-  }
-  .t-item .t-name{font-weight:700;font-size:1.02rem;color:var(--ink);}
-  .t-item .t-time{color:var(--blue);font-weight:500;font-size:.95rem;margin-left:10px;}
-
-  /* 섬김 사역 */
-  .serve-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:8px;}
-  @media (max-width:640px){.serve-grid{grid-template-columns:1fr;}}
-  .serve-card{
-    background:var(--white);border:1px solid var(--line);border-radius:4px;
-    padding:0 22px 22px;
-    overflow:hidden;
-  }
-  .serve-card img{
-    display:block;width:calc(100% + 44px);margin:0 -22px 16px;
-    height:160px;object-fit:cover;
-  }
-  .serve-card .tag{
-    display:inline-block;font-size:.74rem;letter-spacing:.06em;color:var(--white);
-    background:var(--blue);padding:3px 10px;border-radius:100px;margin-bottom:12px;
-  }
-  .serve-card h3{font-size:1.05rem;color:var(--ink);margin-bottom:6px;}
-  .serve-card p{margin:0;font-size:.9rem;color:var(--ink-soft);}
-
-  /* 오시는 길 */
-  .location-box{
-    background:var(--white);border:1px solid var(--line);border-radius:4px;
-    padding:28px;display:grid;gap:6px;
-  }
-  .location-box .addr{font-size:1.08rem;font-weight:500;}
-  .location-box .tel{font-size:1.02rem;}
-  .location-box .maplink{margin-top:10px;font-size:.92rem;}
-
-  /* 추천 사이트 */
-  .link-list{display:grid;gap:10px;margin-top:8px;}
-  .link-row{
-    display:flex;justify-content:space-between;align-items:baseline;
-    padding:14px 18px;background:var(--white);border:1px solid var(--line);border-radius:4px;
-    gap:16px;flex-wrap:wrap;
-  }
-  .link-row .cat{color:var(--blue);font-weight:700;font-size:.88rem;min-width:110px;}
-  .link-row .desc{color:var(--ink-soft);font-size:.88rem;flex:1;}
-  .link-row a{font-weight:500;}
-
-  /* Footer */
-  footer{
-    background:var(--cream-deep);border-top:1px solid var(--line);
-    padding:32px 0 28px;
-  }
-  footer .org-block{font-size:.82rem;color:var(--ink-soft);line-height:1.8;}
-  footer .org-block b{color:var(--ink);}
-  footer .copyright{margin-top:14px;font-size:.78rem;color:#9C8F78;}
-
-  @media (prefers-reduced-motion: reduce){
-    html{scroll-behavior:auto;}
-  }
-</style>
 </head>
 <body>
 
 <nav>
   <div class="wrap">
-    <div class="brand">주마음교회</div>
+    <div class="brand"><a href="index.html" style="color:inherit;">주마음교회</a></div>
     <ul>
-      <li><a href="#intro">교회소개</a></li>
-      <li><a href="#worship">예배안내</a></li>
-      <li><a href="#serve">섬김사역</a></li>
-      <li><a href="#location">오시는 길</a></li>
+      <li><a href="index.html#intro" class="active">교회소개</a></li>
+      <li><a href="worship.html">예배안내</a></li>
+      <li><a href="sermons.html">설교노트</a></li>
+      <li><a href="serve.html">섬김사역</a></li>
+      <li><a href="links.html">추천사이트</a></li>
+      <li><a href="index.html#location">오시는 길</a></li>
     </ul>
   </div>
 </nav>
@@ -246,52 +86,6 @@
   </div>
 </section>
 
-<section id="worship">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="num">SCHEDULE</span>
-      <h2>예배 및 모임 안내</h2>
-    </div>
-    <div class="timeline">
-      <div class="t-item"><span class="t-name">주일오전예배</span><span class="t-time">주일 오전 10:30</span></div>
-      <div class="t-item"><span class="t-name">주일오후찬양예배</span><span class="t-time">주일 오후 2:00</span></div>
-      <div class="t-item"><span class="t-name">정철영어성경학교</span><span class="t-time">주일 오후 3:30</span></div>
-      <div class="t-item"><span class="t-name">수요기도회</span><span class="t-time">수요일 오후 7:30</span></div>
-      <div class="t-item"><span class="t-name">새벽기도회 (월~토, 성경통독)</span><span class="t-time">오전 5:00</span></div>
-      <div class="t-item"><span class="t-name">저녁기도회 (월,화,목,금,토)</span><span class="t-time">오후 7:00</span></div>
-    </div>
-  </div>
-</section>
-
-<section id="serve">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="num">COMMUNITY</span>
-      <h2>지역사회 섬김 사역</h2>
-    </div>
-    <div class="serve-grid">
-      <div class="serve-card">
-        <img src="images/knife-sharpening.jpg" alt="무료 칼갈이 섬김 현장" loading="lazy">
-        <span class="tag">매월 1~2회</span>
-        <h3>무료 칼갈이 섬김</h3>
-        <p>지역 주민들을 위한 무료 칼갈이 서비스를 제공합니다.</p>
-      </div>
-      <div class="serve-card">
-        <img src="images/bungeoppang.jpg" alt="무료 붕어빵 나눔 현장" loading="lazy">
-        <span class="tag">매월 1회</span>
-        <h3>무료 붕어빵 나눔</h3>
-        <p>봉사자들이 직접 만들어 이웃들과 나누는 붕어빵 나눔입니다.</p>
-      </div>
-      <div class="serve-card">
-        <img src="images/senior-center.jpg" alt="경로당 주간 방문 섬김 현장" loading="lazy">
-        <span class="tag">매주</span>
-        <h3>경로당 주간 방문 섬김</h3>
-        <p>지역 경로당을 매주 방문하여 예배와 찬양을 드립니다.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <section id="location">
   <div class="wrap">
     <div class="section-head">
@@ -302,42 +96,6 @@
       <div class="addr">충청남도 천안시 서북구 직산읍 군수1길 1 (직산부영아파트 입구), 2층</div>
       <div class="tel">Tel. 010-4649-3100</div>
       <div class="maplink"><a href="https://map.naver.com/p/search/충청남도%20천안시%20서북구%20직산읍%20군수1길%201" target="_blank" rel="noopener">네이버 지도에서 보기 ↗</a></div>
-    </div>
-  </div>
-</section>
-
-<section id="links">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="num">RESOURCES</span>
-      <h2>함께하는 사역 &amp; 추천 사이트</h2>
-    </div>
-    <div class="link-list">
-      <div class="link-row">
-        <span class="cat">말씀 묵상</span>
-        <span class="desc">매일 새로운 한 구절의 성경 말씀을 한글과 영어로 함께 묵상</span>
-        <a href="https://mean.kr" target="_blank" rel="noopener">mean.kr ↗</a>
-      </div>
-      <div class="link-row">
-        <span class="cat">성경공부</span>
-        <span class="desc">창세기부터 요한계시록까지 인터랙티브 성경공부</span>
-        <a href="https://studybible.kr" target="_blank" rel="noopener">studybible.kr ↗</a>
-      </div>
-      <div class="link-row">
-        <span class="cat">성경 구절 검색</span>
-        <span class="desc">성경 구절을 빠르게 검색할 수 있는 도구</span>
-        <a href="https://bib.kr" target="_blank" rel="noopener">bib.kr ↗</a>
-      </div>
-      <div class="link-row">
-        <span class="cat">복음 나눔</span>
-        <span class="desc">복음 안내와 영접기도</span>
-        <a href="https://jesus.co.kr" target="_blank" rel="noopener">jesus.co.kr ↗</a>
-      </div>
-      <div class="link-row">
-        <span class="cat">찬양 듣기</span>
-        <span class="desc">새찬송가 및 복음송 연속 재생</span>
-        <a href="https://xn--ie5b30b.com" target="_blank" rel="noopener">음악.com ↗</a>
-      </div>
     </div>
   </div>
 </section>

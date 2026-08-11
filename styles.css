@@ -1,0 +1,204 @@
+:root{
+  --cream:#F7F1E7;
+  --cream-deep:#EFE6D5;
+  --terracotta:#B5602E;
+  --terracotta-deep:#8F4A22;
+  --blue:#2B6CA3;
+  --ink:#2E2A24;
+  --ink-soft:#5B5347;
+  --line:#DED2BA;
+  --white:#FFFDF9;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--cream);
+  color:var(--ink);
+  font-family:'Noto Sans KR',sans-serif;
+  line-height:1.7;
+}
+h1,h2,h3{
+  font-family:'Noto Serif KR',serif;
+  margin:0;
+}
+a{color:var(--blue);text-decoration:none;}
+a:hover{text-decoration:underline;}
+a:focus-visible, button:focus-visible{outline:3px solid var(--blue); outline-offset:2px;}
+
+.wrap{max-width:880px;margin:0 auto;padding:0 24px;}
+
+/* Nav */
+nav{
+  position:sticky;top:0;z-index:20;
+  background:rgba(247,241,231,0.92);
+  backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--line);
+}
+nav .wrap{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 24px;
+}
+nav .brand{font-family:'Noto Serif KR',serif;font-weight:700;color:var(--terracotta-deep);font-size:1.05rem;letter-spacing:.02em;}
+nav ul{display:flex;gap:18px;list-style:none;margin:0;padding:0;font-size:.92rem;flex-wrap:wrap;}
+nav ul li a{color:var(--ink-soft);font-weight:500;}
+nav ul li a.active{color:var(--terracotta-deep);font-weight:700;}
+@media (max-width:700px){
+  nav ul{display:none;}
+}
+
+/* Hero (홈페이지 전용) */
+header.hero{
+  padding:96px 0 72px;
+  text-align:center;
+  border-bottom:1px solid var(--line);
+}
+header.hero .eyebrow{
+  font-size:.82rem;letter-spacing:.18em;color:var(--terracotta);font-weight:700;
+  text-transform:uppercase;margin-bottom:18px;
+}
+header.hero h1{
+  font-size:clamp(2.1rem,5vw,3.2rem);
+  color:var(--ink);
+  font-weight:700;
+  margin-bottom:10px;
+}
+header.hero h1 span{display:block;font-size:.42em;color:var(--ink-soft);font-weight:500;margin-top:8px;letter-spacing:.02em;}
+header.hero p.lead{
+  max-width:520px;margin:26px auto 0;
+  color:var(--ink-soft);font-size:1.05rem;
+}
+
+/* Page banner (하위 페이지 전용) */
+header.page-banner{
+  padding:56px 0 40px;
+  text-align:center;
+  border-bottom:1px solid var(--line);
+}
+header.page-banner .eyebrow{
+  font-size:.82rem;letter-spacing:.18em;color:var(--terracotta);font-weight:700;
+  text-transform:uppercase;margin-bottom:14px;
+}
+header.page-banner h1{
+  font-size:clamp(1.6rem,4vw,2.2rem);
+  color:var(--ink);
+  font-weight:700;
+}
+header.page-banner p.sub{
+  max-width:480px;margin:14px auto 0;
+  color:var(--ink-soft);font-size:.95rem;
+}
+
+section{padding:64px 0;}
+section + section{border-top:1px solid var(--line);}
+
+.section-head{margin-bottom:36px;}
+.section-head .num{
+  display:inline-block;font-family:'Noto Serif KR',serif;color:var(--blue);
+  font-size:.85rem;font-weight:700;letter-spacing:.12em;margin-bottom:10px;
+}
+.section-head h2{
+  font-size:1.7rem;color:var(--terracotta-deep);font-weight:700;
+}
+.section-head p.desc{margin:10px 0 0;color:var(--ink-soft);font-size:.95rem;}
+
+/* 소개 */
+.intro p{font-size:1.02rem;color:var(--ink);max-width:640px;margin:0 0 16px;}
+.intro p:last-child{margin-bottom:0;}
+.pillars{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:32px;
+}
+@media (max-width:640px){.pillars{grid-template-columns:1fr;}}
+.pillar{
+  background:var(--white);border:1px solid var(--line);border-radius:4px;
+  padding:22px 20px;
+}
+.pillar h3{color:var(--blue);font-size:1.05rem;margin-bottom:8px;}
+.pillar p{margin:0;font-size:.92rem;color:var(--ink-soft);}
+.closing{margin-top:32px;font-size:1rem;color:var(--terracotta-deep);font-weight:500;font-family:'Noto Serif KR',serif;}
+
+/* 예배 안내 - timeline */
+.timeline{margin-top:8px;border-left:2px solid var(--terracotta);padding-left:0;}
+.t-item{
+  position:relative;padding:16px 0 16px 28px;border-bottom:1px dashed var(--line);
+}
+.t-item:last-child{border-bottom:none;}
+.t-item::before{
+  content:'';position:absolute;left:-6px;top:22px;width:10px;height:10px;
+  border-radius:50%;background:var(--terracotta);border:2px solid var(--cream);
+}
+.t-item .t-name{font-weight:700;font-size:1.02rem;color:var(--ink);}
+.t-item .t-time{color:var(--blue);font-weight:500;font-size:.95rem;margin-left:10px;}
+
+/* 섬김 사역 */
+.serve-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:8px;}
+@media (max-width:640px){.serve-grid{grid-template-columns:1fr;}}
+.serve-card{
+  background:var(--white);border:1px solid var(--line);border-radius:4px;
+  padding:0 22px 22px;
+  overflow:hidden;
+}
+.serve-card img{
+  display:block;width:calc(100% + 44px);margin:0 -22px 16px;
+  height:160px;object-fit:cover;
+}
+.serve-card .tag{
+  display:inline-block;font-size:.74rem;letter-spacing:.06em;color:var(--white);
+  background:var(--blue);padding:3px 10px;border-radius:100px;margin-bottom:12px;
+}
+.serve-card h3{font-size:1.05rem;color:var(--ink);margin-bottom:6px;}
+.serve-card p{margin:0;font-size:.9rem;color:var(--ink-soft);}
+
+/* 오시는 길 */
+.location-box{
+  background:var(--white);border:1px solid var(--line);border-radius:4px;
+  padding:28px;display:grid;gap:6px;
+}
+.location-box .addr{font-size:1.08rem;font-weight:500;}
+.location-box .tel{font-size:1.02rem;}
+.location-box .maplink{margin-top:10px;font-size:.92rem;}
+
+/* 추천 사이트 */
+.link-list{display:grid;gap:10px;margin-top:8px;}
+.link-row{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:14px 18px;background:var(--white);border:1px solid var(--line);border-radius:4px;
+  gap:16px;flex-wrap:wrap;
+}
+.link-row .cat{
+  color:var(--blue);font-weight:700;font-size:.92rem;min-width:110px;
+}
+.link-row .cat::after{content:" ↗";font-weight:400;}
+.link-row .desc{color:var(--ink-soft);font-size:.88rem;flex:1;}
+
+/* 설교 노트 */
+.sermon-list{display:grid;gap:16px;margin-top:8px;}
+.sermon-card{
+  background:var(--white);border:1px solid var(--line);border-radius:4px;
+  padding:24px 26px;
+}
+.sermon-card .meta{
+  display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:10px;
+}
+.sermon-card .date{
+  font-size:.8rem;color:var(--white);background:var(--blue);
+  padding:3px 10px;border-radius:100px;letter-spacing:.02em;
+}
+.sermon-card .verse{font-size:.88rem;color:var(--terracotta);font-weight:700;}
+.sermon-card h3{font-size:1.2rem;color:var(--ink);margin-bottom:10px;}
+.sermon-card p.summary{margin:0 0 14px;font-size:.95rem;color:var(--ink-soft);}
+.sermon-card .links{display:flex;gap:16px;font-size:.88rem;font-weight:500;flex-wrap:wrap;}
+.sermon-card .links a::after{content:" ↗";}
+
+/* Footer */
+footer{
+  background:var(--cream-deep);border-top:1px solid var(--line);
+  padding:32px 0 28px;
+}
+footer .org-block{font-size:.82rem;color:var(--ink-soft);line-height:1.8;}
+footer .org-block b{color:var(--ink);}
+footer .copyright{margin-top:14px;font-size:.78rem;color:#9C8F78;}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+}
