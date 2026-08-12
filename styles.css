@@ -3,6 +3,8 @@
   --cream-deep:#EFE6D5;
   --terracotta:#B5602E;
   --terracotta-deep:#8F4A22;
+  --terracotta-pale:#F5E4D5;
+  --terracotta-pale-hover:#EFD7BE;
   --blue:#2B6CA3;
   --ink:#2E2A24;
   --ink-soft:#5B5347;
@@ -193,14 +195,15 @@ section + section{border-top:1px solid var(--line);}
 /* 설교 노트 */
 .sermon-list{display:grid;gap:16px;margin-top:8px;}
 .sermon-card{
-  background:var(--white);border:1px solid var(--line);border-radius:4px;
+  background:var(--white);border:1px solid var(--line);border-left:4px solid var(--terracotta);border-radius:4px;
   padding:0;overflow:hidden;
 }
 .sermon-card summary{
   padding:24px 50px 24px 26px;cursor:pointer;list-style:none;position:relative;
+  background:var(--terracotta-pale);
 }
 .sermon-card summary::-webkit-details-marker{display:none;}
-.sermon-card summary:hover{background:var(--cream-deep);}
+.sermon-card summary:hover{background:var(--terracotta-pale-hover);}
 .sermon-card summary::after{
   content:'▾';position:absolute;right:24px;top:26px;
   color:var(--terracotta);font-size:1.1rem;transition:transform .2s ease;
@@ -214,7 +217,8 @@ section + section{border-top:1px solid var(--line);}
   padding:3px 10px;border-radius:100px;letter-spacing:.02em;
 }
 .sermon-card .verse-ref{
-  font-size:.88rem;color:var(--ink-soft);font-weight:500;
+  display:inline-block;font-size:.8rem;color:var(--white);background:var(--terracotta);
+  padding:3px 10px;border-radius:100px;letter-spacing:.02em;font-weight:500;
 }
 .sermon-card .verse{
   font-size:.88rem;color:var(--terracotta);font-weight:700;
@@ -248,7 +252,10 @@ section + section{border-top:1px solid var(--line);}
 .verse-modal-body p b{color:var(--blue);margin-right:4px;}
 .sermon-card h3{font-size:1.2rem;color:var(--terracotta-deep);margin:0;}
 .sermon-card .sermon-body{padding:0 26px 26px;border-top:1px solid var(--line);}
-.sermon-card .sermon-body p.summary{margin:18px 0 14px;font-size:.95rem;color:var(--ink-soft);}
+.sermon-card .sermon-body p.summary{
+  margin:18px 0 14px;padding:16px 18px;font-size:.95rem;color:var(--ink-soft);line-height:1.8;
+  background:var(--cream-deep);border:1px solid var(--line);border-radius:4px;
+}
 .sermon-card .links{display:flex;gap:16px;font-size:.88rem;font-weight:500;flex-wrap:wrap;}
 .sermon-card .links a::after{content:" ↗";}
 .sermon-card .sermon-infographic{
@@ -259,14 +266,15 @@ section + section{border-top:1px solid var(--line);}
 /* 교회 소식 */
 .notice-list{display:grid;gap:16px;margin-top:8px;}
 .notice-card{
-  background:var(--white);border:1px solid var(--line);border-radius:4px;
+  background:var(--white);border:1px solid var(--line);border-left:4px solid var(--terracotta);border-radius:4px;
   padding:0;overflow:hidden;
 }
 .notice-card summary{
   padding:24px 50px 24px 26px;cursor:pointer;list-style:none;position:relative;
+  background:var(--terracotta-pale);
 }
 .notice-card summary::-webkit-details-marker{display:none;}
-.notice-card summary:hover{background:var(--cream-deep);}
+.notice-card summary:hover{background:var(--terracotta-pale-hover);}
 .notice-card summary::after{
   content:'▾';position:absolute;right:24px;top:26px;
   color:var(--terracotta);font-size:1.1rem;transition:transform .2s ease;
@@ -276,7 +284,7 @@ section + section{border-top:1px solid var(--line);}
   display:inline-block;font-size:.8rem;color:var(--white);background:var(--blue);
   padding:3px 10px;border-radius:100px;letter-spacing:.02em;margin-bottom:10px;
 }
-.notice-card h3{font-size:1.2rem;color:var(--ink);margin:0;}
+.notice-card h3{font-size:1.2rem;color:var(--terracotta-deep);margin:0;}
 .notice-card .notice-body{padding:0 26px 26px;border-top:1px solid var(--line);}
 .notice-card .notice-items{
   margin:18px 0 0;padding:0;list-style:none;display:grid;gap:10px;
