@@ -213,6 +213,9 @@ section + section{border-top:1px solid var(--line);}
   font-size:.8rem;color:var(--white);background:var(--blue);
   padding:3px 10px;border-radius:100px;letter-spacing:.02em;
 }
+.sermon-card .verse-ref{
+  font-size:.88rem;color:var(--ink-soft);font-weight:500;
+}
 .sermon-card .verse{
   font-size:.88rem;color:var(--terracotta);font-weight:700;
   text-decoration:underline;text-decoration-color:var(--line);
@@ -243,7 +246,7 @@ section + section{border-top:1px solid var(--line);}
 .verse-modal-body p{margin:0 0 14px;font-size:.98rem;line-height:1.8;color:var(--ink);}
 .verse-modal-body p:last-child{margin-bottom:0;}
 .verse-modal-body p b{color:var(--blue);margin-right:4px;}
-.sermon-card h3{font-size:1.2rem;color:var(--ink);margin:0;}
+.sermon-card h3{font-size:1.2rem;color:var(--terracotta-deep);margin:0;}
 .sermon-card .sermon-body{padding:0 26px 26px;border-top:1px solid var(--line);}
 .sermon-card .sermon-body p.summary{margin:18px 0 14px;font-size:.95rem;color:var(--ink-soft);}
 .sermon-card .links{display:flex;gap:16px;font-size:.88rem;font-weight:500;flex-wrap:wrap;}
