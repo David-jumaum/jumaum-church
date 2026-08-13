@@ -306,6 +306,11 @@ section + section{border-top:1px solid var(--line);}
 .notice-box p{
   margin:0;padding:16px 18px;font-size:.95rem;color:var(--ink);line-height:1.8;
 }
+.notice-box p.verse-paraphrase{padding-bottom:10px;}
+.notice-box p.verse-original{
+  padding-top:10px;color:#A69B85;font-size:.85rem;font-style:italic;border-top:1px dashed var(--line);
+}
+.notice-box p.verse-original small{color:#B7AC94;font-style:normal;}
 .notice-box p small{display:block;margin-top:8px;color:var(--ink-soft);font-size:.82rem;}
 
 /* Footer */
