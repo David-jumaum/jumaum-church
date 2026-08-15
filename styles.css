@@ -116,6 +116,26 @@ header.hero p.lead{
   .hero-bg{animation:none;}
 }
 
+/* 영구 표어 (Hero 안) */
+.hero-motto{
+  display:inline-block;margin:18px 0 0;padding:8px 24px;
+  border-top:1px solid rgba(255,255,255,.35);border-bottom:1px solid rgba(255,255,255,.35);
+  color:#FBEFDD;font-family:'Noto Serif KR',serif;font-size:1.1rem;font-weight:700;letter-spacing:.02em;
+}
+
+/* 연간 표어 배너 (Hero 바로 아래) */
+.year-motto-wrap{padding:32px 0 8px;background:var(--cream);}
+.year-motto{
+  max-width:640px;margin:0 auto;background:var(--white);border:1px solid var(--line);
+  border-radius:var(--radius-md);box-shadow:var(--shadow-soft);padding:20px 28px;text-align:center;
+}
+.year-motto .tag{
+  display:inline-block;font-size:.78rem;font-weight:700;letter-spacing:.1em;color:var(--white);
+  background:var(--terracotta);padding:3px 12px;border-radius:100px;margin-bottom:10px;
+}
+.year-motto p{margin:0;font-family:'Noto Serif KR',serif;font-weight:700;font-size:1.15rem;color:var(--terracotta-deep);}
+.year-motto small{display:block;margin-top:6px;color:var(--ink-soft);font-size:.85rem;font-weight:400;}
+
 /* Page banner (하위 페이지 전용) */
 header.page-banner{
   padding:56px 0 40px;
