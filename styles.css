@@ -85,15 +85,15 @@ header.hero{
   position:absolute;top:0;left:0;right:0;bottom:0;
   background-image:url('images/hero-bible.jpg');
   background-size:cover;background-position:35% 55%;
-  animation:heroKenBurns 24s ease-in-out infinite alternate;
+  animation:heroKenBurns 16s ease-in-out infinite alternate;
 }
 .hero-overlay{
   position:absolute;top:0;left:0;right:0;bottom:0;
   background:linear-gradient(180deg, rgba(30,27,23,.68) 0%, rgba(30,27,23,.82) 100%);
 }
 @keyframes heroKenBurns{
-  0%{transform:scale(1.08) translate(-2%,0);}
-  100%{transform:scale(1.18) translate(1%,-1%);}
+  0%{transform:scale(1.08) translate(-3%,0);}
+  100%{transform:scale(1.24) translate(2%,-2%);}
 }
 .hero-content{position:relative;z-index:1;}
 header.hero .eyebrow{
