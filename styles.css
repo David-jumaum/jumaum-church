@@ -1,15 +1,18 @@
 :root{
   --cream:#F7F1E7;
   --cream-deep:#EFE6D5;
-  --terracotta:#B5602E;
-  --terracotta-deep:#8F4A22;
+  --terracotta:#B55A2E;
+  --terracotta-deep:#8A4527;
   --terracotta-pale:#F5E4D5;
   --terracotta-pale-hover:#EFD7BE;
   --blue:#2B6CA3;
-  --ink:#2E2A24;
-  --ink-soft:#5B5347;
-  --line:#DED2BA;
+  --ink:#2F2A27;
+  --ink-soft:#6B625C;
+  --line:#E6D9C9;
   --white:#FFFDF9;
+  --radius-sm:8px;
+  --radius-md:10px;
+  --shadow-soft:0 10px 30px rgba(47,42,39,.06);
 }
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
@@ -43,6 +46,7 @@ nav .wrap{
   position:relative;
 }
 nav .brand{font-family:'Noto Serif KR',serif;font-weight:700;color:var(--terracotta-deep);font-size:1.05rem;letter-spacing:.02em;}
+.brand-logo{height:34px;width:auto;vertical-align:middle;margin-right:8px;}
 nav ul{display:flex;gap:18px;list-style:none;margin:0;padding:0;font-size:.92rem;flex-wrap:wrap;}
 nav ul li a{color:var(--ink-soft);font-weight:500;}
 nav ul li a.active{color:var(--terracotta-deep);font-weight:700;}
@@ -70,24 +74,46 @@ nav ul li a.active{color:var(--terracotta-deep);font-weight:700;}
 
 /* Hero (홈페이지 전용) */
 header.hero{
-  padding:96px 0 72px;
+  position:relative;
+  padding:140px 0 120px;
   text-align:center;
   border-bottom:1px solid var(--line);
+  overflow:hidden;
+  color:var(--white);
 }
+.hero-bg{
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  background-image:url('images/hero-bible.jpg');
+  background-size:cover;background-position:35% 55%;
+  animation:heroKenBurns 24s ease-in-out infinite alternate;
+}
+.hero-overlay{
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  background:linear-gradient(180deg, rgba(30,27,23,.68) 0%, rgba(30,27,23,.82) 100%);
+}
+@keyframes heroKenBurns{
+  0%{transform:scale(1.08) translate(-2%,0);}
+  100%{transform:scale(1.18) translate(1%,-1%);}
+}
+.hero-content{position:relative;z-index:1;}
 header.hero .eyebrow{
-  font-size:.82rem;letter-spacing:.18em;color:var(--terracotta);font-weight:700;
+  font-size:.82rem;letter-spacing:.18em;color:#F0C9A8;font-weight:700;
   text-transform:uppercase;margin-bottom:18px;
 }
 header.hero h1{
   font-size:clamp(2.1rem,5vw,3.2rem);
-  color:var(--ink);
+  color:var(--white);
   font-weight:700;
   margin-bottom:10px;
+  text-shadow:0 2px 16px rgba(0,0,0,.25);
 }
-header.hero h1 span{display:block;font-size:.42em;color:var(--ink-soft);font-weight:500;margin-top:8px;letter-spacing:.02em;}
+header.hero h1 span{display:block;font-size:.42em;color:#EFE6D5;font-weight:500;margin-top:8px;letter-spacing:.02em;}
 header.hero p.lead{
   max-width:520px;margin:26px auto 0;
-  color:var(--ink-soft);font-size:1.05rem;
+  color:#F3ECE0;font-size:1.05rem;
+}
+@media (prefers-reduced-motion: reduce){
+  .hero-bg{animation:none;}
 }
 
 /* Page banner (하위 페이지 전용) */
@@ -131,8 +157,8 @@ section + section{border-top:1px solid var(--line);}
 }
 @media (max-width:640px){.pillars{grid-template-columns:1fr;}}
 .pillar{
-  background:var(--white);border:1px solid var(--line);border-radius:4px;
-  padding:22px 20px;
+  background:var(--white);border:1px solid var(--line);border-radius:var(--radius-md);
+  padding:22px 20px;box-shadow:var(--shadow-soft);
 }
 .pillar h3{color:var(--blue);font-size:1.05rem;margin-bottom:8px;}
 .pillar p{margin:0;font-size:.92rem;color:var(--ink-soft);}
@@ -155,7 +181,7 @@ section + section{border-top:1px solid var(--line);}
 .serve-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:8px;}
 @media (max-width:640px){.serve-grid{grid-template-columns:1fr;}}
 .serve-card{
-  background:var(--white);border:1px solid var(--line);border-radius:4px;
+  background:var(--white);border:1px solid var(--line);border-radius:var(--radius-md);
   padding:0 22px 22px;
   overflow:hidden;
 }
@@ -172,7 +198,7 @@ section + section{border-top:1px solid var(--line);}
 
 /* 오시는 길 */
 .location-box{
-  background:var(--white);border:1px solid var(--line);border-radius:4px;
+  background:var(--white);border:1px solid var(--line);border-radius:var(--radius-md);
   padding:28px;display:grid;gap:6px;
 }
 .location-box .addr{font-size:1.08rem;font-weight:500;}
@@ -183,7 +209,7 @@ section + section{border-top:1px solid var(--line);}
 .link-list{display:grid;gap:10px;margin-top:8px;}
 .link-row{
   display:flex;justify-content:space-between;align-items:baseline;
-  padding:14px 18px;background:var(--white);border:1px solid var(--line);border-radius:4px;
+  padding:14px 18px;background:var(--white);border:1px solid var(--line);border-radius:var(--radius-md);
   gap:16px;flex-wrap:wrap;
 }
 .link-row .cat{
@@ -195,7 +221,7 @@ section + section{border-top:1px solid var(--line);}
 /* 설교 노트 */
 .sermon-list{display:grid;gap:16px;margin-top:8px;}
 .sermon-card{
-  background:var(--white);border:1px solid var(--line);border-left:4px solid var(--terracotta);border-radius:4px;
+  background:var(--white);border:1px solid var(--line);border-left:4px solid var(--terracotta);border-radius:var(--radius-md);
   padding:0;overflow:hidden;
 }
 .sermon-card summary{
@@ -254,19 +280,19 @@ section + section{border-top:1px solid var(--line);}
 .sermon-card .sermon-body{padding:0 26px 26px;border-top:1px solid var(--line);}
 .sermon-card .sermon-body p.summary{
   margin:18px 0 14px;padding:16px 18px;font-size:.95rem;color:var(--ink-soft);line-height:1.8;
-  background:var(--cream-deep);border:1px solid var(--line);border-radius:4px;
+  background:var(--cream-deep);border:1px solid var(--line);border-radius:var(--radius-md);
 }
 .sermon-card .links{display:flex;gap:16px;font-size:.88rem;font-weight:500;flex-wrap:wrap;}
 .sermon-card .links a::after{content:" ↗";}
 .sermon-card .sermon-infographic{
-  display:block;width:100%;border-radius:4px;border:1px solid var(--line);
+  display:block;width:100%;border-radius:var(--radius-md);border:1px solid var(--line);
   margin-top:4px;
 }
 
 /* 교회 소식 */
 .notice-list{display:grid;gap:16px;margin-top:8px;}
 .notice-card{
-  background:var(--white);border:1px solid var(--line);border-left:4px solid var(--terracotta);border-radius:4px;
+  background:var(--white);border:1px solid var(--line);border-left:4px solid var(--terracotta);border-radius:var(--radius-md);
   padding:0;overflow:hidden;
 }
 .notice-card summary{
@@ -296,7 +322,7 @@ section + section{border-top:1px solid var(--line);}
   content:'✦';position:absolute;left:0;top:1px;color:var(--terracotta);font-size:.85rem;
 }
 .notice-box{
-  margin-top:20px;border:1px solid var(--line);border-radius:4px;overflow:hidden;
+  margin-top:20px;border:1px solid var(--line);border-radius:var(--radius-md);overflow:hidden;
 }
 .notice-box h4{
   margin:0;padding:10px 18px;background:var(--cream-deep);
