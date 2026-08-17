@@ -1,3 +1,14 @@
+/* 웹폰트 (자체 호스팅) */
+@font-face{font-family:'MaruBuri';src:url('fonts/MaruBuri-Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'MaruBuri';src:url('fonts/MaruBuri-SemiBold.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap;}
+@font-face{font-family:'MaruBuri';src:url('fonts/MaruBuri-Bold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap;}
+@font-face{font-family:'SCDream';src:url('fonts/SCDream-Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'SCDream';src:url('fonts/SCDream-Medium.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap;}
+@font-face{font-family:'SCDream';src:url('fonts/SCDream-Bold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap;}
+@font-face{font-family:'SCDream';src:url('fonts/SCDream-Heavy.woff2') format('woff2');font-weight:800;font-style:normal;font-display:swap;}
+@font-face{font-family:'Paperlogy';src:url('fonts/Paperlogy-Medium.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap;}
+@font-face{font-family:'Paperlogy';src:url('fonts/Paperlogy-Bold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap;}
+
 :root{
   --cream:#F7F1E7;
   --cream-deep:#EFE6D5;
@@ -20,11 +31,11 @@ body{
   margin:0;
   background:var(--cream);
   color:var(--ink);
-  font-family:'Noto Sans KR',sans-serif;
+  font-family:'SCDream',sans-serif;
   line-height:1.7;
 }
 h1,h2,h3{
-  font-family:'Noto Serif KR',serif;
+  font-family:'MaruBuri',serif;
   margin:0;
 }
 a{color:var(--blue);text-decoration:none;}
@@ -45,7 +56,7 @@ nav .wrap{
   padding:14px 24px;
   position:relative;
 }
-nav .brand{font-family:'Noto Serif KR',serif;font-weight:700;color:var(--terracotta-deep);font-size:1.05rem;letter-spacing:.02em;}
+nav .brand{font-family:'SCDream',sans-serif;font-weight:800;color:var(--terracotta-deep);font-size:1.05rem;letter-spacing:.02em;}
 .brand-logo{height:34px;width:auto;vertical-align:middle;margin-right:8px;}
 nav ul{display:flex;gap:18px;list-style:none;margin:0;padding:0;font-size:.92rem;flex-wrap:wrap;}
 nav ul li a{color:var(--ink-soft);font-weight:500;}
@@ -97,7 +108,7 @@ header.hero{
 }
 .hero-content{position:relative;z-index:1;}
 header.hero .eyebrow{
-  font-size:.82rem;letter-spacing:.18em;color:#F0C9A8;font-weight:700;
+  font-family:'Paperlogy',sans-serif;font-size:.82rem;letter-spacing:.18em;color:#F0C9A8;font-weight:700;
   text-transform:uppercase;margin-bottom:18px;
 }
 header.hero h1{
@@ -107,7 +118,7 @@ header.hero h1{
   margin-bottom:10px;
   text-shadow:0 2px 16px rgba(0,0,0,.25);
 }
-header.hero h1 span{display:block;font-size:.42em;color:#EFE6D5;font-weight:500;margin-top:8px;letter-spacing:.02em;}
+header.hero h1 span{display:block;font-size:.42em;color:#EFE6D5;font-weight:400;margin-top:8px;letter-spacing:.02em;}
 header.hero p.lead{
   max-width:520px;margin:26px auto 0;
   color:#F3ECE0;font-size:1.05rem;
@@ -120,7 +131,7 @@ header.hero p.lead{
 .hero-motto{
   display:inline-block;margin:18px 0 0;padding:8px 24px;
   border-top:1px solid rgba(255,255,255,.35);border-bottom:1px solid rgba(255,255,255,.35);
-  color:#FBEFDD;font-family:'Noto Serif KR',serif;font-size:1.1rem;font-weight:700;letter-spacing:.02em;
+  color:#FBEFDD;font-family:'MaruBuri',serif;font-size:1.1rem;font-weight:700;letter-spacing:.02em;
 }
 
 /* 연간 표어 배너 (Hero 바로 아래) */
@@ -133,7 +144,7 @@ header.hero p.lead{
   display:inline-block;font-size:.78rem;font-weight:700;letter-spacing:.1em;color:var(--white);
   background:var(--terracotta);padding:3px 12px;border-radius:100px;margin-bottom:10px;
 }
-.year-motto p{margin:0;font-family:'Noto Serif KR',serif;font-weight:700;font-size:1.15rem;color:var(--terracotta-deep);}
+.year-motto p{margin:0;font-family:'MaruBuri',serif;font-weight:700;font-size:1.15rem;color:var(--terracotta-deep);}
 .year-motto small{display:block;margin-top:6px;color:var(--ink-soft);font-size:.85rem;font-weight:400;}
 
 /* Page banner (하위 페이지 전용) */
@@ -143,7 +154,7 @@ header.page-banner{
   border-bottom:1px solid var(--line);
 }
 header.page-banner .eyebrow{
-  font-size:.82rem;letter-spacing:.18em;color:var(--terracotta);font-weight:700;
+  font-family:'Paperlogy',sans-serif;font-size:.82rem;letter-spacing:.18em;color:var(--terracotta);font-weight:700;
   text-transform:uppercase;margin-bottom:14px;
 }
 header.page-banner h1{
@@ -161,7 +172,7 @@ section + section{border-top:1px solid var(--line);}
 
 .section-head{margin-bottom:36px;}
 .section-head .num{
-  display:inline-block;font-family:'Noto Serif KR',serif;color:var(--blue);
+  display:inline-block;font-family:'Paperlogy',sans-serif;color:var(--blue);
   font-size:.85rem;font-weight:700;letter-spacing:.12em;margin-bottom:10px;
 }
 .section-head h2{
@@ -182,7 +193,7 @@ section + section{border-top:1px solid var(--line);}
 }
 .pillar h3{color:var(--blue);font-size:1.05rem;margin-bottom:8px;}
 .pillar p{margin:0;font-size:.92rem;color:var(--ink-soft);}
-.closing{margin-top:32px;font-size:1rem;color:var(--terracotta-deep);font-weight:500;font-family:'Noto Serif KR',serif;}
+.closing{margin-top:32px;font-size:1rem;color:var(--terracotta-deep);font-weight:600;font-family:'MaruBuri',serif;}
 
 /* 예배 안내 - timeline */
 .timeline{margin-top:8px;border-left:2px solid var(--terracotta);padding-left:0;}
@@ -259,11 +270,11 @@ section + section{border-top:1px solid var(--line);}
   display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:10px;
 }
 .sermon-card .date{
-  font-size:.8rem;color:var(--white);background:var(--blue);
-  padding:3px 10px;border-radius:100px;letter-spacing:.02em;
+  font-family:'Paperlogy',sans-serif;font-size:.8rem;color:var(--white);background:var(--blue);
+  padding:3px 10px;border-radius:100px;letter-spacing:.02em;font-weight:500;
 }
 .sermon-card .verse-ref{
-  display:inline-block;font-size:.8rem;color:var(--white);background:var(--terracotta);
+  display:inline-block;font-family:'Paperlogy',sans-serif;font-size:.8rem;color:var(--white);background:var(--terracotta);
   padding:3px 10px;border-radius:100px;letter-spacing:.02em;font-weight:500;
 }
 .sermon-card .verse{
@@ -283,7 +294,7 @@ section + section{border-top:1px solid var(--line);}
 .verse-modal-head{
   display:flex;justify-content:space-between;align-items:baseline;
   padding:18px 20px;border-bottom:1px solid var(--line);
-  font-family:'Noto Serif KR',serif;font-weight:700;color:var(--terracotta-deep);
+  font-family:'MaruBuri',serif;font-weight:700;color:var(--terracotta-deep);
 }
 .verse-modal-head small{font-weight:500;color:var(--ink-soft);font-size:.78rem;}
 .verse-modal-close{
@@ -327,8 +338,8 @@ section + section{border-top:1px solid var(--line);}
 }
 .notice-card[open] summary::after{transform:rotate(180deg);}
 .notice-card .date{
-  display:inline-block;font-size:.8rem;color:var(--white);background:var(--blue);
-  padding:3px 10px;border-radius:100px;letter-spacing:.02em;margin-bottom:10px;
+  display:inline-block;font-family:'Paperlogy',sans-serif;font-size:.8rem;color:var(--white);background:var(--blue);
+  padding:3px 10px;border-radius:100px;letter-spacing:.02em;margin-bottom:10px;font-weight:500;
 }
 .notice-card h3{font-size:1.2rem;color:var(--terracotta-deep);margin:0;}
 .notice-card .notice-body{padding:0 26px 26px;border-top:1px solid var(--line);}
@@ -346,7 +357,7 @@ section + section{border-top:1px solid var(--line);}
 }
 .notice-box h4{
   margin:0;padding:10px 18px;background:var(--cream-deep);
-  font-family:'Noto Serif KR',serif;font-size:.95rem;font-weight:700;color:var(--terracotta-deep);
+  font-family:'MaruBuri',serif;font-size:.95rem;font-weight:700;color:var(--terracotta-deep);
   border-bottom:1px solid var(--line);
 }
 .notice-box p{
@@ -364,6 +375,7 @@ footer{
   background:var(--cream-deep);border-top:1px solid var(--line);
   padding:32px 0 28px;
 }
+footer .footer-logo{display:block;height:40px;width:auto;margin:0 0 16px;}
 footer .org-block{font-size:.82rem;color:var(--ink-soft);line-height:1.8;}
 footer .org-block b{color:var(--ink);}
 footer .copyright{margin-top:14px;font-size:.78rem;color:#9C8F78;}
