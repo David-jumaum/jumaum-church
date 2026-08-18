@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   setupArchive('.sermon-list', '설교');
   setupArchive('.notice-list', '소식');
-  setupNotifyBanner();
   setupInstallBanner();
 });
 
@@ -137,95 +136,6 @@ function setupInstallBanner() {
   } else if (isIOS) {
     banner = buildBanner('ios');
   }
-}
-
-// 알림 받기 배너 — "새 소식 알림을 받으시겠습니까?" 권한 요청을 사용자가 명확히
-// 누르는 버튼으로 직접 트리거한다. OneSignal 대시보드의 자동 프롬프트 설정에
-// 기대지 않고, 여기서 확실하게 브라우저 알림 권한 창을 띄운다.
-// - 이미 허용했거나(granted) 거부한(denied) 적이 있으면 표시 안 함
-//   (브라우저가 그 결정을 영구 기억하므로 우리가 따로 저장할 필요도 없음).
-// - "나중에"(✕)를 누르면 14일간 다시 뜨지 않음.
-// - PC/모바일 구분 없이, 알림 기능을 지원하는 모든 브라우저에서 표시.
-function setupNotifyBanner() {
-  if (!('Notification' in window)) return;
-  if (Notification.permission !== 'default') return; // 이미 허용/거부 결정됨
-
-  var DISMISS_KEY = 'jumaumNotifyBannerDismissedAt';
-  var DISMISS_DAYS = 14;
-  try {
-    var last = localStorage.getItem(DISMISS_KEY);
-    if (last && (Date.now() - Number(last)) < DISMISS_DAYS * 24 * 60 * 60 * 1000) return;
-  } catch (e) { /* localStorage 사용 불가 시 그냥 계속 진행 */ }
-
-  window.OneSignalDeferred = window.OneSignalDeferred || [];
-  window.OneSignalDeferred.push(function (OneSignal) {
-    // 그 사이 이미 결정이 났을 수 있으니 한 번 더 확인
-    if (Notification.permission !== 'default') return;
-
-    var el = document.createElement('div');
-    el.className = 'install-banner notify-banner';
-    el.innerHTML =
-      '<div class="install-banner-icon"><img src="images/logo-icon.png" alt=""></div>' +
-      '<div class="install-banner-text"><strong>새 소식 알림 받기</strong>' +
-      '<span>설교노트와 교회소식이 올라오면 알려드릴게요.</span></div>' +
-      '<button type="button" class="install-banner-action">알림 받기</button>' +
-      '<button type="button" class="install-banner-close" aria-label="닫기">✕</button>';
-    document.body.appendChild(el);
-    registerBanner(el);
-    requestAnimationFrame(function () { el.classList.add('show'); repositionBanners(); });
-
-    function dismiss() {
-      el.classList.remove('show');
-      unregisterBanner(el);
-      setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 300);
-      try { localStorage.setItem(DISMISS_KEY, String(Date.now())); } catch (e) {}
-    }
-
-    el.querySelector('.install-banner-close').addEventListener('click', dismiss);
-    el.querySelector('.install-banner-action').addEventListener('click', function () {
-      var btn = this;
-      btn.disabled = true;
-      var settled = false;
-
-      // 일부 기기(특히 홈 화면 아이콘으로 실행한 안드로이드 앱)에서 권한 요청이
-      // 응답 없이 멈추는 사례가 있어, 8초 안에 끝나지 않거나 도중에 오류가 나도
-      // 버튼이 영영 멈춰있지 않도록 안전장치를 둔다.
-      function onSuccess() {
-        if (settled) return;
-        settled = true;
-        dismiss();
-      }
-      function onFail(err) {
-        if (settled) return;
-        settled = true;
-        console.error('[알림 받기] 권한 요청이 정상적으로 끝나지 않았습니다:', err);
-        btn.disabled = false;
-        btn.textContent = '다시 시도';
-        if (!el.querySelector('.notify-fallback-hint')) {
-          var hint = document.createElement('span');
-          hint.className = 'notify-fallback-hint';
-          hint.textContent = '창이 뜨지 않으면 휴대폰 설정 > 앱 > 주마음교회(또는 Chrome) > 알림에서 직접 켜주세요.';
-          el.querySelector('.install-banner-text').appendChild(hint);
-          repositionBanners();
-        }
-      }
-
-      try {
-        var req = OneSignal.Notifications.requestPermission();
-        if (req && typeof req.then === 'function') {
-          req.then(onSuccess).catch(onFail);
-        } else {
-          onSuccess();
-        }
-      } catch (err) {
-        onFail(err);
-      }
-
-      setTimeout(function () {
-        onFail(new Error('timeout: requestPermission()이 8초 안에 응답하지 않음'));
-      }, 8000);
-    });
-  });
 }
 
 // 설교노트/교회소식 아카이브 UI: 최신 글만 기본 노출하고,

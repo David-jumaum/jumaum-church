@@ -36,17 +36,6 @@
 <link rel="manifest" href="site.webmanifest">
 <meta name="theme-color" content="#B55A2E">
 
-<!-- 웹 푸시 알림(OneSignal) — 설교노트/교회소식이 새로 올라오면 구독한 성도님 휴대폰에 알림.
-     아래 appId는 OneSignal에서 발급받은 값으로 반드시 교체해야 합니다. -->
-<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-<script>
-  window.OneSignalDeferred = window.OneSignalDeferred || [];
-  OneSignalDeferred.push(async function (OneSignal) {
-    await OneSignal.init({
-      appId: "9d6defe9-1cdd-4ba0-8a83-15bf37add09f",
-    });
-  });
-</script>
 </head>
 <body>
 
@@ -146,6 +135,6 @@
   </div>
 </footer>
 
-<script src="script.js?v=20"></script>
+<script src="script.js?v=21"></script>
 </body>
 </html>
