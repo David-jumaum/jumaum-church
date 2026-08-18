@@ -5,13 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>추천 사이트 | 주마음교회</title>
 <meta name="description" content="주마음교회가 추천하는 말씀 묵상, 성경공부, 찬양 관련 사이트 모음.">
-<link rel="stylesheet" href="styles.css?v=18">
+<link rel="stylesheet" href="styles.css?v=23">
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
 <link rel="shortcut icon" href="favicon.ico">
 <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
 <meta name="theme-color" content="#B55A2E">
+
+<!-- 웹 푸시 알림(OneSignal) — 설교노트/교회소식이 새로 올라오면 구독한 성도님 휴대폰에 알림.
+     아래 appId는 OneSignal에서 발급받은 값으로 반드시 교체해야 합니다. -->
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function (OneSignal) {
+    await OneSignal.init({
+      appId: "9d6defe9-1cdd-4ba0-8a83-15bf37add09f",
+    });
+  });
+</script>
 </head>
 <body>
 
@@ -72,7 +84,13 @@
 
 <footer>
   <div class="wrap">
-    <img src="images/logo-footer.png" alt="주마음교회 로고" class="footer-logo">
+    <div class="footer-brand">
+      <img src="images/logo-icon.png" alt="주마음교회 로고" class="footer-logo-icon">
+      <div class="footer-brand-text">
+        <span class="footer-brand-kr">주마음교회</span>
+        <span class="footer-brand-en">JUMAUM CHURCH</span>
+      </div>
+    </div>
     <div class="org-block">
       <b>단체</b>: Jumaum Presbyterian Church (대한예수교장로회 주마음교회) · <b>자선단체 ID</b>: 312-82-64918 · <b>사용자 ID</b>: <a href="mailto:leadpastor@jumaum.org">leadpastor@jumaum.org</a>
     </div>
@@ -80,6 +98,6 @@
   </div>
 </footer>
 
-<script src="script.js?v=14"></script>
+<script src="script.js?v=17"></script>
 </body>
 </html>

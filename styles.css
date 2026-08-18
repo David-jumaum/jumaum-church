@@ -375,10 +375,72 @@ footer{
   background:var(--cream-deep);border-top:1px solid var(--line);
   padding:32px 0 28px;
 }
-footer .footer-logo{display:block;height:40px;width:auto;margin:0 0 16px;}
+.footer-brand{display:flex;align-items:center;gap:10px;margin:0 0 16px;}
+.footer-brand .footer-logo-icon{height:36px;width:auto;display:block;}
+.footer-brand-text{display:flex;flex-direction:column;align-items:flex-start;line-height:1.25;}
+.footer-brand-text .footer-brand-kr{font-family:'SCDream',sans-serif;font-weight:800;font-size:.92rem;color:var(--terracotta-deep);letter-spacing:.14em;}
+.footer-brand-text .footer-brand-en{font-family:'SCDream',sans-serif;font-weight:500;font-size:9px;color:var(--terracotta);letter-spacing:0;margin-top:3px;}
 footer .org-block{font-size:.82rem;color:var(--ink-soft);line-height:1.8;}
 footer .org-block b{color:var(--ink);}
 footer .copyright{margin-top:14px;font-size:.78rem;color:#9C8F78;}
+
+/* 설교노트/교회소식 아카이브 (지난 글 보기 버튼 + 달력) */
+.archive-hidden{display:none;}
+.archive-toggle{
+  display:flex;align-items:center;gap:8px;
+  margin:8px 0 28px;padding:10px 18px;
+  background:var(--white);border:1px solid var(--line);border-radius:100px;
+  color:var(--terracotta-deep);font-weight:700;font-size:.92rem;cursor:pointer;
+  box-shadow:var(--shadow-soft);
+}
+.archive-toggle .arrow{transition:transform .2s ease;}
+.archive-toggle[aria-expanded="true"] .arrow{transform:rotate(180deg);}
+.archive-panel{display:none;margin-bottom:28px;}
+.archive-panel.open{display:block;}
+.cal-wrap{
+  background:var(--white);border:1px solid var(--line);border-radius:var(--radius-md);
+  box-shadow:var(--shadow-soft);padding:20px 22px;max-width:420px;
+}
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.cal-head button{background:none;border:1px solid var(--line);border-radius:8px;cursor:pointer;
+  font-size:1rem;padding:4px 10px;color:var(--terracotta-deep);}
+.cal-head .cal-title{font-family:'MaruBuri',serif;font-weight:700;color:var(--terracotta-deep);font-size:1.05rem;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center;}
+.cal-dow{font-size:.75rem;color:var(--ink-soft);font-weight:700;padding-bottom:6px;}
+.cal-day{position:relative;padding:8px 0;border-radius:8px;font-size:.88rem;color:var(--ink-soft);}
+.cal-day.has-entry{color:var(--ink);font-weight:700;cursor:pointer;background:var(--terracotta-pale);}
+.cal-day.has-entry:hover{background:var(--terracotta-pale-hover);}
+.cal-day.selected{background:var(--terracotta);color:#fff;}
+.cal-day.empty{visibility:hidden;}
+.cal-dot{position:absolute;bottom:2px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--terracotta-deep);}
+.cal-day.selected .cal-dot{background:#fff;}
+.cal-hint{font-size:.78rem;color:var(--ink-soft);margin-top:12px;}
+
+/* 홈 화면 설치 안내 배너 */
+.install-banner{
+  position:fixed;left:14px;right:14px;bottom:14px;z-index:80;
+  max-width:440px;margin:0 auto;
+  display:flex;align-items:center;gap:12px;
+  background:var(--white);border:1px solid var(--line);border-radius:var(--radius-md);
+  box-shadow:0 14px 34px rgba(47,42,39,.2);
+  padding:14px;
+  transform:translateY(140%);
+  transition:transform .3s ease;
+}
+.install-banner.show{transform:translateY(0);}
+.install-banner-icon img{width:40px;height:40px;border-radius:10px;display:block;flex-shrink:0;}
+.install-banner-text{flex:1;display:flex;flex-direction:column;gap:3px;min-width:0;}
+.install-banner-text strong{font-family:'MaruBuri',serif;color:var(--terracotta-deep);font-size:.92rem;}
+.install-banner-text span{font-size:.8rem;color:var(--ink-soft);line-height:1.5;}
+.install-banner-action{
+  flex-shrink:0;background:var(--terracotta);color:#fff;border:none;border-radius:100px;
+  padding:9px 16px;font-size:.85rem;font-weight:700;cursor:pointer;white-space:nowrap;
+}
+.install-banner-action:disabled{opacity:.6;cursor:default;}
+.install-banner-close{
+  flex-shrink:0;background:none;border:none;color:var(--ink-soft);font-size:1rem;cursor:pointer;
+  padding:4px;line-height:1;
+}
 
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto;}
