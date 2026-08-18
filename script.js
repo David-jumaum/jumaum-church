@@ -183,8 +183,47 @@ function setupNotifyBanner() {
 
     el.querySelector('.install-banner-close').addEventListener('click', dismiss);
     el.querySelector('.install-banner-action').addEventListener('click', function () {
-      this.disabled = true;
-      OneSignal.Notifications.requestPermission().then(dismiss).catch(dismiss);
+      var btn = this;
+      btn.disabled = true;
+      var settled = false;
+
+      // 일부 기기(특히 홈 화면 아이콘으로 실행한 안드로이드 앱)에서 권한 요청이
+      // 응답 없이 멈추는 사례가 있어, 8초 안에 끝나지 않거나 도중에 오류가 나도
+      // 버튼이 영영 멈춰있지 않도록 안전장치를 둔다.
+      function onSuccess() {
+        if (settled) return;
+        settled = true;
+        dismiss();
+      }
+      function onFail(err) {
+        if (settled) return;
+        settled = true;
+        console.error('[알림 받기] 권한 요청이 정상적으로 끝나지 않았습니다:', err);
+        btn.disabled = false;
+        btn.textContent = '다시 시도';
+        if (!el.querySelector('.notify-fallback-hint')) {
+          var hint = document.createElement('span');
+          hint.className = 'notify-fallback-hint';
+          hint.textContent = '창이 뜨지 않으면 휴대폰 설정 > 앱 > 주마음교회(또는 Chrome) > 알림에서 직접 켜주세요.';
+          el.querySelector('.install-banner-text').appendChild(hint);
+          repositionBanners();
+        }
+      }
+
+      try {
+        var req = OneSignal.Notifications.requestPermission();
+        if (req && typeof req.then === 'function') {
+          req.then(onSuccess).catch(onFail);
+        } else {
+          onSuccess();
+        }
+      } catch (err) {
+        onFail(err);
+      }
+
+      setTimeout(function () {
+        onFail(new Error('timeout: requestPermission()이 8초 안에 응답하지 않음'));
+      }, 8000);
     });
   });
 }
@@ -215,6 +254,19 @@ function setupArchive(listSelector, label) {
   var dateMap = {};
   cards.forEach(function (c) { dateMap[c.getAttribute('data-date')] = c; });
 
+  // 아코디언이 동시에 두 개 이상 열려 있으면 헷갈리므로, 이 목록 안에서는 항상
+  // 하나만 열려 있도록 한다 — 달력에서 선택했든 사용자가 직접 summary를
+  // 클릭했든 상관없이, 하나가 열리면 나머지는 자동으로 닫힘.
+  cards.forEach(function (c) {
+    c.addEventListener('toggle', function () {
+      if (c.open) {
+        cards.forEach(function (other) {
+          if (other !== c && other.open) other.removeAttribute('open');
+        });
+      }
+    });
+  });
+
   // 토글 버튼
   var toggle = document.createElement('button');
   toggle.type = 'button';
@@ -239,10 +291,40 @@ function setupArchive(listSelector, label) {
   list.insertAdjacentElement('afterend', panel);
   list.insertAdjacentElement('afterend', toggle);
 
+  // 달력에서 선택해서 지금 열려있는 지난 글 카드(없으면 null).
+  var openArchiveCard = null;
+
+  // "지난 OO 보기"를 누르면: 최신 글은 닫고(접고), 달력만 나타남
+  // (아직 날짜를 고르지 않았으면 지난 글은 아무것도 안 보임).
+  function enterArchive() {
+    panel.classList.add('open');
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.querySelector('.label').textContent = '지난 ' + label + ' 닫기';
+    latest.removeAttribute('open');
+    renderCal();
+  }
+
+  // "지난 OO 닫기"를 누르면: 지금 열려있던 지난 글은 다시 숨기고(접고 감추고),
+  // 최신 글만 다시 열려서 보이도록 원래 상태로 되돌림.
+  function exitArchive() {
+    panel.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.querySelector('.label').textContent = '지난 ' + label + ' 보기';
+    if (openArchiveCard) {
+      openArchiveCard.classList.add('archive-hidden');
+      openArchiveCard.removeAttribute('open');
+      openArchiveCard = null;
+    }
+    latest.setAttribute('open', '');
+    renderCal();
+  }
+
   toggle.addEventListener('click', function () {
-    var open = panel.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    toggle.querySelector('.label').textContent = open ? '지난 ' + label + ' 닫기' : '지난 ' + label + ' 보기';
+    if (panel.classList.contains('open')) {
+      exitArchive();
+    } else {
+      enterArchive();
+    }
   });
 
   var latestParts = latest.getAttribute('data-date').split('-').map(Number);
@@ -280,7 +362,10 @@ function setupArchive(listSelector, label) {
         var dot = document.createElement('span');
         dot.className = 'cal-dot';
         el.appendChild(dot);
-        if (!dateMap[key].classList.contains('archive-hidden')) {
+        var isVisible = dateMap[key] === latest
+          ? !panel.classList.contains('open')
+          : dateMap[key] === openArchiveCard;
+        if (isVisible) {
           el.classList.add('selected');
         }
         el.addEventListener('click', (function (k) {
@@ -294,8 +379,22 @@ function setupArchive(listSelector, label) {
   function selectDate(key) {
     var card = dateMap[key];
     if (!card) return;
+
+    // 최신 글의 날짜를 골랐으면 "지난 글 닫기"와 같은 동작으로 처리해
+    // 최신 글로 돌아간다.
+    if (card === latest) {
+      exitArchive();
+      latest.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+
+    if (openArchiveCard && openArchiveCard !== card) {
+      openArchiveCard.classList.add('archive-hidden');
+      openArchiveCard.removeAttribute('open');
+    }
     card.classList.remove('archive-hidden');
     card.setAttribute('open', '');
+    openArchiveCard = card;
     renderCal();
     card.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
