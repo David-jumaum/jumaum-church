@@ -27,8 +27,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
   setupArchive('.sermon-list', '설교');
   setupArchive('.notice-list', '소식');
+  setupNotifyBanner();
   setupInstallBanner();
 });
+
+// 화면 하단에 여러 배너(알림 받기, 홈 화면 설치)가 동시에 뜰 수 있어서,
+// 서로 겹치지 않도록 아래에서부터 순서대로 쌓아올리는 작은 헬퍼.
+var __bannerStack = [];
+function registerBanner(el) {
+  __bannerStack.push(el);
+  repositionBanners();
+}
+function unregisterBanner(el) {
+  var i = __bannerStack.indexOf(el);
+  if (i > -1) __bannerStack.splice(i, 1);
+  repositionBanners();
+}
+function repositionBanners() {
+  var offset = 14;
+  __bannerStack.forEach(function (el) {
+    el.style.bottom = offset + 'px';
+    offset += el.offsetHeight + 10;
+  });
+}
 
 // 홈 화면 설치 안내 배너.
 // - 이미 홈 화면에서 실행 중(standalone)이면 아무것도 하지 않음.
@@ -75,6 +96,7 @@ function setupInstallBanner() {
     if (banner) {
       var b = banner;
       b.classList.remove('show');
+      unregisterBanner(b);
       setTimeout(function () { if (b.parentNode) b.parentNode.removeChild(b); }, 300);
     }
     try { localStorage.setItem(DISMISS_KEY, String(Date.now())); } catch (e) {}
@@ -92,7 +114,8 @@ function setupInstallBanner() {
       (mode === 'android' ? '<button type="button" class="install-banner-action">설치하기</button>' : '') +
       '<button type="button" class="install-banner-close" aria-label="닫기">✕</button>';
     document.body.appendChild(el);
-    requestAnimationFrame(function () { el.classList.add('show'); });
+    registerBanner(el);
+    requestAnimationFrame(function () { el.classList.add('show'); repositionBanners(); });
     el.querySelector('.install-banner-close').addEventListener('click', dismiss);
     return el;
   }
@@ -114,6 +137,56 @@ function setupInstallBanner() {
   } else if (isIOS) {
     banner = buildBanner('ios');
   }
+}
+
+// 알림 받기 배너 — "새 소식 알림을 받으시겠습니까?" 권한 요청을 사용자가 명확히
+// 누르는 버튼으로 직접 트리거한다. OneSignal 대시보드의 자동 프롬프트 설정에
+// 기대지 않고, 여기서 확실하게 브라우저 알림 권한 창을 띄운다.
+// - 이미 허용했거나(granted) 거부한(denied) 적이 있으면 표시 안 함
+//   (브라우저가 그 결정을 영구 기억하므로 우리가 따로 저장할 필요도 없음).
+// - "나중에"(✕)를 누르면 14일간 다시 뜨지 않음.
+// - PC/모바일 구분 없이, 알림 기능을 지원하는 모든 브라우저에서 표시.
+function setupNotifyBanner() {
+  if (!('Notification' in window)) return;
+  if (Notification.permission !== 'default') return; // 이미 허용/거부 결정됨
+
+  var DISMISS_KEY = 'jumaumNotifyBannerDismissedAt';
+  var DISMISS_DAYS = 14;
+  try {
+    var last = localStorage.getItem(DISMISS_KEY);
+    if (last && (Date.now() - Number(last)) < DISMISS_DAYS * 24 * 60 * 60 * 1000) return;
+  } catch (e) { /* localStorage 사용 불가 시 그냥 계속 진행 */ }
+
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  window.OneSignalDeferred.push(function (OneSignal) {
+    // 그 사이 이미 결정이 났을 수 있으니 한 번 더 확인
+    if (Notification.permission !== 'default') return;
+
+    var el = document.createElement('div');
+    el.className = 'install-banner notify-banner';
+    el.innerHTML =
+      '<div class="install-banner-icon"><img src="images/logo-icon.png" alt=""></div>' +
+      '<div class="install-banner-text"><strong>새 소식 알림 받기</strong>' +
+      '<span>설교노트와 교회소식이 올라오면 알려드릴게요.</span></div>' +
+      '<button type="button" class="install-banner-action">알림 받기</button>' +
+      '<button type="button" class="install-banner-close" aria-label="닫기">✕</button>';
+    document.body.appendChild(el);
+    registerBanner(el);
+    requestAnimationFrame(function () { el.classList.add('show'); repositionBanners(); });
+
+    function dismiss() {
+      el.classList.remove('show');
+      unregisterBanner(el);
+      setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 300);
+      try { localStorage.setItem(DISMISS_KEY, String(Date.now())); } catch (e) {}
+    }
+
+    el.querySelector('.install-banner-close').addEventListener('click', dismiss);
+    el.querySelector('.install-banner-action').addEventListener('click', function () {
+      this.disabled = true;
+      OneSignal.Notifications.requestPermission().then(dismiss).catch(dismiss);
+    });
+  });
 }
 
 // 설교노트/교회소식 아카이브 UI: 최신 글만 기본 노출하고,
