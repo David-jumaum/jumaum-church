@@ -1,10 +1,29 @@
 document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.nav-toggle').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var nav = btn.closest('nav');
-      var ul = nav.querySelector('ul');
+    var nav = btn.closest('nav');
+    var ul = nav.querySelector('ul');
+
+    function closeMenu() {
+      ul.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
       var isOpen = ul.classList.toggle('open');
       btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    // 메뉴가 열려 있을 때 메뉴 바깥(다른 곳)을 누르면 자동으로 닫힘
+    document.addEventListener('click', function (e) {
+      if (ul.classList.contains('open') && !nav.contains(e.target)) {
+        closeMenu();
+      }
+    });
+
+    // 메뉴 안의 링크를 눌러도 닫힘(같은 페이지 안의 #앵커 링크를 눌렀을 때도 메뉴가 닫히도록)
+    ul.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', closeMenu);
     });
   });
 
@@ -55,7 +74,11 @@ function repositionBanners() {
 // - 이 기기에서 설치가 완료된 적이 있으면(안드로이드 appinstalled 이벤트로 감지,
 //   localStorage에 영구 저장) 나중에 일반 브라우저로 다시 들어와도 다시는 안 뜸.
 // - PC(데스크톱)에서는 표시하지 않고, 휴대폰(안드로이드/아이폰)에서만 표시.
-// - 안드로이드/크롬: 브라우저의 실제 설치 프롬프트(beforeinstallprompt)를 그대로 연결.
+// - 안드로이드/크롬: 브라우저의 실제 설치 프롬프트(beforeinstallprompt)가 오면 그걸 그대로
+//   연결해서 "설치하기" 버튼으로 보여줌. 다만 크롬이 (방문 기록/체류 시간 등 자체 기준으로)
+//   이 이벤트를 아예 안 쏘거나 한참 뒤에 쏘는 경우가 있어서, 2.5초 안에 이벤트가 없으면
+//   버튼 없이 "우측 상단 메뉴에서 홈 화면에 추가"라는 수동 안내만 있는 배너로 대체함
+//   (2026-08-19 추가 — 실제 기기에서 설치 배너가 아예 안 뜨는 사례가 보고되어 대비책 추가).
 // - 아이폰/사파리: 설치를 코드로 실행시키는 방법도, 설치 완료를 감지하는 방법도 OS 자체에
 //   없으므로(애플 미지원), 수동 안내만 보여주고 "닫기"를 누르면 14일간 다시 뜨지 않음.
 function setupInstallBanner() {
@@ -71,6 +94,11 @@ function setupInstallBanner() {
   var isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
   var isAndroid = /Android/.test(ua);
   if (!isIOS && !isAndroid) return;
+
+  // 네이버/카카오톡/인스타그램/페이스북 등 앱 내장 브라우저(인앱 브라우저)는 크롬/사파리가
+  // 아니어서 beforeinstallprompt가 안 오는 것은 물론, 메뉴에 "홈 화면에 추가" 자체가 없거나
+  // 다른 위치에 있는 경우가 많음 — 이런 경우엔 우선 "다른 브라우저로 열기"부터 안내함.
+  var isInAppBrowser = /NAVER|KAKAOTALK|Instagram|FBAN|FBAV|Line\//i.test(ua);
 
   // 안드로이드는 설치가 실제로 완료되는 순간 브라우저가 이 이벤트를 쏴줌 —
   // 우리가 만든 "설치하기" 버튼을 거치지 않고 브라우저 자체 메뉴로 설치해도 똑같이 발생함.
@@ -104,9 +132,18 @@ function setupInstallBanner() {
   function buildBanner(mode) {
     var el = document.createElement('div');
     el.className = 'install-banner';
-    var textHtml = mode === 'android'
-      ? '<strong>홈 화면에 추가하기</strong><span>더 빠르게 접속하고, 새 소식 알림도 받아보세요.</span>'
-      : '<strong>홈 화면에 추가하기</strong><span>하단(또는 상단) 공유 버튼을 누른 뒤 "홈 화면에 추가"를 선택해주세요.</span>';
+    var textHtml;
+    if (mode === 'android') {
+      textHtml = '<strong>홈 화면에 추가하기</strong><span>더 빠르게 접속하고, 새 소식 알림도 받아보세요.</span>';
+    } else if (mode === 'android-manual') {
+      textHtml = isInAppBrowser
+        ? '<strong>홈 화면에 추가하기</strong><span>지금 보고 계신 앱 안 브라우저에서는 안 보일 수 있어요. 메뉴(⋮ 또는 공유 아이콘)에서 "다른 브라우저로 열기"를 선택해 크롬으로 연 뒤, 그 메뉴에서 "홈 화면에 추가"를 선택해주세요.</span>'
+        : '<strong>홈 화면에 추가하기</strong><span>우측 상단 점 세 개(⋮) 메뉴를 누른 뒤 "홈 화면에 추가"를 선택해주세요.</span>';
+    } else {
+      textHtml = isInAppBrowser
+        ? '<strong>홈 화면에 추가하기</strong><span>지금 보고 계신 앱 안 브라우저에서는 지원되지 않아요. 메뉴(⋯ 또는 공유 아이콘)에서 "다른 브라우저로 열기"를 선택해 사파리로 연 뒤, 하단 공유 버튼에서 "홈 화면에 추가"를 선택해주세요.</span>'
+        : '<strong>홈 화면에 추가하기</strong><span>하단(또는 상단) 공유 버튼을 누른 뒤 "홈 화면에 추가"를 선택해주세요.</span>';
+    }
     el.innerHTML =
       '<div class="install-banner-icon"><img src="images/logo-icon.png" alt=""></div>' +
       '<div class="install-banner-text">' + textHtml + '</div>' +
@@ -120,8 +157,10 @@ function setupInstallBanner() {
   }
 
   if (isAndroid) {
+    var promptFired = false;
     window.addEventListener('beforeinstallprompt', function (e) {
       e.preventDefault();
+      promptFired = true;
       deferredPrompt = e;
       banner = buildBanner('android');
       banner.querySelector('.install-banner-action').addEventListener('click', function () {
@@ -133,6 +172,15 @@ function setupInstallBanner() {
         });
       });
     });
+
+    // 크롬은 자체 판단(방문 횟수/체류 시간 등)에 따라 beforeinstallprompt를 아예 안 쏘거나
+    // 한참 뒤에 쏘는 경우가 있어서, 몇 초 안에 이벤트가 없으면 "설치하기" 버튼 없이
+    // 수동 안내 문구만 있는 배너를 대신 보여줌(안드로이드에서도 아무것도 안 뜨는 상황 방지).
+    setTimeout(function () {
+      if (!promptFired && !banner) {
+        banner = buildBanner('android-manual');
+      }
+    }, 2500);
   } else if (isIOS) {
     banner = buildBanner('ios');
   }
